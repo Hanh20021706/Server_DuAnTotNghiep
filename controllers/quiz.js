@@ -14,6 +14,7 @@ export const detailQuiz = async (req,res)=>{
     try {
         const quiz = await Quiz.findOne({_id: req.params.id }).exec()
         const answerQuiz = await AnswerQuiz.find({quiz}).populate("quiz").exec()
+        // const history = await AnswerQuiz.find({quiz}).populate("quiz").exec()
         res.json({quiz,answerQuiz})
     } catch (error) {
         res.status(400).json({message:"Không tìm thấy Data"})
@@ -45,4 +46,13 @@ export const deleteQuiz = async (req,res)=>{
     } catch (error) {
         res.status(400).json({message:"Xóa thất bại"})
     }
+}
+
+export const getExerciseQuizByIdPracticeActivity = async (req,res)=>{
+  try {
+      const data = await Quiz.find({practiceActivity: req.params.practiceActivity }).exec()
+      res.json(data)
+  } catch (error) {
+      res.status(400).json({message:"Không tìm thấy Data"})
+  }
 }
