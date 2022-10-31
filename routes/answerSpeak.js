@@ -1,8 +1,6 @@
 import express from "express";
 import { addAnswerSpeak, deleteAnswerSpeak, detailAnswerSpeak, editAnswerSpeak, listAnswerSpeak } from "../controllers/answerSpeak";
 
-
-
 const router = express.Router()
 
 router.get("/answerSpeak", listAnswerSpeak )
