@@ -30,6 +30,7 @@ export const detailGrammar = async (req,res)=>{
 }
 
 export const updateGrammar = async (req, res) =>{
+    console.log(req.body);
     try {
         const data = await Grammar.findOneAndUpdate({_id:req.params.id}, req.body, {new:true}).exec();
         res.json(data)
