@@ -83,6 +83,8 @@ import PracticeActivityRouter from './routes/practiceActivity'
 //----------------GoogleSpeech---------
 import googleSpeech from './routes/googleSpeech';
 
+import messageRouter from './routes/message';
+
 const speech = require('@google-cloud/speech');
 const speechClient = new speech.SpeechClient()
 
@@ -108,12 +110,15 @@ const specs = swaggerJsDoc(options)
 
 const app = express();
 const path = require("path");
-
+var bodyParser = require('body-parser');
 const nodemailer = require("nodemailer")
 
 
 app.use(morgan("tiny"));
 app.use(express.json());
+// app.use(express.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 require('dotenv').config()
@@ -200,6 +205,9 @@ app.use('/api', PracticeActivityRouter)
 
 //----------------GoogleSpeech-------------
 app.use('/api', googleSpeech)
+
+//----------------GoogleSpeech-------------
+app.use('/api', messageRouter)
 
 mongoose
   .connect(process.env.MONGO_URI)
